@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+</head>
+<style>
+	*{
+		margin: 0;padding: 0;
+	}
+	li{
+		list-style: none;
+	}
+	body{
+		background:#E6E6E6;
+	}
+	#T{
+		width: 100%;height:180px;border: 3px solid white;background:#E6E6E6;
+	}
+	.Num-box{
+		text-align: center;
+	}
+	button{
+		width:80px;height:80px;margin:5px 0px;font-weight: bold;
+	}
+	.Num{
+		background:#FAFAFA;font-size: 20px;
+	}
+	.Sign{
+		background:#F0F0F0;font-size: 20px;
+	}
+	#spanA{
+		color:black;font-size:30px;line-height:100px;font-weight:bold;letter-spacing:0px;padding-left:20px;
+	}
+	#qingchu{
+		width: 100%;height:50px;background:#F0F0F0;font-size: 20px;
+	}
+</style>
+<body>
+	<div id="T">
+		<span id="spanA"></span>
+	</div>
+	<div class="Num-box">
+		<button value="7" class="Num A">7</button>
+		<button value="8" class="Num A">8</button>
+		<button value="9" class="Num A">9</button>
+		<button id="cheng" value="*" class="Sign S">*</button>
+		<button value="4" class="Num A">4</button>
+		<button value="5" class="Num A">5</button>
+		<button value="6" class="Num A">6</button>
+		<button id="jian" value="-" class="Sign S">-</button>
+		<button value="1" class="Num A">1</button>
+		<button value="2" class="Num A">2</button>
+		<button value="3" class="Num A">3</button>
+		<button id="jia" value="+" class="Sign S">+</button>
+		<button id="chu" value="/" class="Sign S">/</button>
+		<button value="0" class="Num A">0</button>
+		<button id="dian" value="." class="Sign">.</button>
+		<button id="dengyu" value="=" class="Sign">=</button>
+		<button id="qingchu" value="AC" >AC</button>
+	</div>
+</body>
+</html>
+<script src="js/mui.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+  	mui.init();
+  	var A = document.getElementsByClassName('A')
+  	var chu = document.getElementById("chu")
+  	var cheng = document.getElementById("cheng")
+  	var jia = document.getElementById("jia")
+  	var jian = document.getElementById("jian")
+  	var TearA = document.getElementById("spanA")
+	var dengyu = document.getElementById("dengyu")
+	var qingchu = document.getElementById("qingchu")
+	var dian = document.getElementById("dian")
+	var S =document.getElementsByClassName("S")
+  	for (var i = 0; i < A.length; i++) {
+  		A[i].addEventListener('tap',function(){
+  			TearA.innerText +=this.value
+  		})	
+  	}	
+	for (var i = 0; i < S.length; i++) {
+   		S[i].addEventListener('tap',function(){
+   			var SSS = this.value;
+   			TearA.innerText+=this.value;
+   			
+   		})
+   		
+   }
+	jia.addEventListener('tap',function(){
+		var str = TearA.innerText;
+		var s=str.substr(0,1);
+		if(s=="+"){
+			TearA.innerText=null
+		}
+	})
+	jian.addEventListener('tap',function(){
+		var str = TearA.innerText;
+		var s=str.substr(0,1);
+		if(s=="-"){
+			TearA.innerText=null
+		}
+	})
+	cheng.addEventListener('tap',function(){
+		var str = TearA.innerText;
+		var s=str.substr(0,1);
+		if(s=="*"){
+			TearA.innerText=null
+		}
+	})
+	chu.addEventListener('tap',function(){
+		var str = TearA.innerText;
+		var s=str.substr(0,1);
+		if(s=="/"){
+			TearA.innerText=null
+		}
+	})
+   dian.addEventListener('tap',function(){
+		TearA.innerText+=this.value;
+		var str = TearA.innerText;
+		var s=str.substr(0,1);
+		if(s=="."){
+			TearA.innerText=null
+		}
+  	})
+    
+   	function Subtraction(){//减法
+		 var str = TearA.innerText;	
+		 var arr = str.split('-');  
+		 var ResultJian = arr[0]-arr[1];
+		 TearA.innerHTML = ResultJian;
+   	}
+   	function Multiplication(){//乘法
+		 var str = TearA.innerText;	
+		 var arr = str.split('*');  
+		 var ResultJian = arr[0]*arr[1];
+		 TearA.innerHTML = ResultJian;
+   	}
+   	function Addition(){	//加法
+		 var str = TearA.innerText;	
+		 var arr = str.split('+');  
+		 var n1=arr[0];
+		 var n2=arr[1];
+		 var ResultJian = Number(n1)+Number(n2);
+		 TearA.innerHTML = ResultJian;
+   	}
+   	function Division(){//除法
+		 var str = TearA.innerText;	
+		 var arr = str.split('/');  
+		 var ResultJian = arr[0]/arr[1];
+		 TearA.innerHTML = ResultJian;
+   	}
+   	function Dy(){
+   		var strA = TearA.innerText;
+		if(strA.indexOf("-") != -1){
+			Subtraction();
+		}else if(strA.indexOf("+") != -1){
+			Addition()
+		}else if(strA.indexOf("*") != -1){
+			Multiplication();
+		}else{
+			Division();
+		}
+		if(TearA.innerText=='NaN'){
+//			dian.disabled=true;
+			TearA.innerText="输入有误~请重新输入！"
+			setTimeout(function(){
+				TearA.innerText=""
+			},1000)
+		}
+   	}
+   dengyu.addEventListener('tap',function(){		  
+	  	Dy();
+   })
+	
+   	qingchu.addEventListener('tap',function(){
+	  	TearA.innerText=null;
+	  	
+	 })
+	
+	
+
+</script>
